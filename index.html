@@ -1,0 +1,2385 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yola Anggraeni ✦ RPL Developer Portfolio</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700;800;900&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+    <style>
+        /* ===== RESET & VARIABLES ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --pink-1: #ffd6e8;
+            --pink-2: #ffa8d5;
+            --pink-3: #ff6ec7;
+            --pink-4: #ff3d9a;
+            --pink-5: #e91e8c;
+            --pink-6: #b3007a;
+            --purple: #a855f7;
+            --violet: #7c3aed;
+            --blue: #6366f1;
+            --dark: #1a0a1f;
+            --dark-2: #2d1b2e;
+            --gray: #6b5b6d;
+            --light: #fdf5fa;
+            --white: #ffffff;
+
+            --gradient-1: linear-gradient(135deg, #ff6ec7 0%, #a855f7 50%, #6366f1 100%);
+            --gradient-2: linear-gradient(135deg, #ffd6e8 0%, #ffa8d5 50%, #ff6ec7 100%);
+            --gradient-3: linear-gradient(120deg, #ff3d9a 0%, #a855f7 100%);
+            --gradient-4: linear-gradient(135deg, #e91e8c 0%, #7c3aed 100%);
+            --gradient-text: linear-gradient(135deg, #ff3d9a 0%, #a855f7 60%, #6366f1 100%);
+
+            --shadow-sm: 0 4px 20px rgba(255, 61, 154, 0.15);
+            --shadow-md: 0 10px 40px rgba(255, 61, 154, 0.2);
+            --shadow-lg: 0 20px 60px rgba(168, 85, 247, 0.25);
+            --shadow-glow: 0 0 60px rgba(255, 110, 199, 0.4);
+
+            --radius: 24px;
+            --radius-sm: 16px;
+            --radius-lg: 32px;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 100px;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: var(--dark);
+            color: var(--white);
+            line-height: 1.7;
+            overflow-x: hidden;
+            position: relative;
+            min-height: 100vh;
+        }
+
+        /* ===== ANIMATED BACKGROUND ===== */
+        .bg-canvas {
+            position: fixed;
+            inset: 0;
+            z-index: -2;
+            background: 
+                radial-gradient(ellipse at 20% 0%, rgba(255, 61, 154, 0.25) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 100%, rgba(168, 85, 247, 0.25) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(99, 102, 241, 0.15) 0%, transparent 60%),
+                linear-gradient(180deg, #1a0a1f 0%, #150818 50%, #0f0512 100%);
+        }
+
+        .bg-blobs {
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .blob {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(90px);
+            opacity: 0.5;
+            animation: blobFloat 20s ease-in-out infinite;
+        }
+
+        .blob:nth-child(1) {
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, #ff3d9a 0%, transparent 70%);
+            top: -100px;
+            left: -100px;
+            animation-delay: 0s;
+        }
+
+        .blob:nth-child(2) {
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, #a855f7 0%, transparent 70%);
+            bottom: -200px;
+            right: -200px;
+            animation-delay: 5s;
+        }
+
+        .blob:nth-child(3) {
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, #6366f1 0%, transparent 70%);
+            top: 50%;
+            left: 50%;
+            animation-delay: 10s;
+        }
+
+        @keyframes blobFloat {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(50px, -50px) scale(1.1); }
+            66% { transform: translate(-50px, 50px) scale(0.9); }
+        }
+
+        /* ===== CURSOR GLOW ===== */
+        .cursor-glow {
+            position: fixed;
+            width: 400px;
+            height: 400px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255, 110, 199, 0.15) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 0;
+            transform: translate(-50%, -50%);
+            transition: opacity 0.3s;
+            mix-blend-mode: screen;
+        }
+
+        /* ===== CONTAINER ===== */
+        .container {
+            width: 100%;
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* ===== TYPOGRAPHY ===== */
+        h1, h2, h3, h4 {
+            font-family: 'Space Grotesk', 'Outfit', sans-serif;
+            font-weight: 700;
+            line-height: 1.15;
+            letter-spacing: -0.02em;
+        }
+
+        .gradient-text {
+            background: var(--gradient-text);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .section-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 18px;
+            background: rgba(255, 110, 199, 0.1);
+            border: 1px solid rgba(255, 110, 199, 0.3);
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: var(--pink-2);
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            margin-bottom: 20px;
+            backdrop-filter: blur(10px);
+        }
+
+        .section-tag::before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            background: var(--pink-3);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--pink-3);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.3); }
+        }
+
+        .section-title {
+            font-size: clamp(2.2rem, 5vw, 3.5rem);
+            margin-bottom: 20px;
+            text-align: center;
+            font-weight: 700;
+            letter-spacing: -0.03em;
+        }
+
+        .section-title em {
+            font-family: 'Caveat', cursive;
+            font-style: normal;
+            font-weight: 700;
+            background: var(--gradient-text);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: rgba(255, 255, 255, 0.6);
+            max-width: 600px;
+            margin: 0 auto 60px;
+            font-size: 1.05rem;
+        }
+
+        /* ===== HEADER ===== */
+        #header {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: calc(100% - 40px);
+            max-width: 1200px;
+            z-index: 1000;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 14px 24px;
+            background: rgba(26, 10, 31, 0.6);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid rgba(255, 110, 199, 0.2);
+            border-radius: 100px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            transition: var(--transition);
+        }
+
+        .logo {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.4rem;
+            font-weight: 700;
+            text-decoration: none;
+            background: var(--gradient-text);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            letter-spacing: -0.02em;
+        }
+
+        .logo-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--gradient-3);
+            border-radius: 50%;
+            box-shadow: 0 0 12px var(--pink-3);
+            animation: pulse 2s infinite;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 6px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: rgba(255, 255, 255, 0.7);
+            font-weight: 500;
+            font-size: 0.9rem;
+            padding: 10px 18px;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: var(--white);
+            background: rgba(255, 110, 199, 0.1);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: rgba(255, 110, 199, 0.1);
+            border: 1px solid rgba(255, 110, 199, 0.3);
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            font-size: 1.1rem;
+            color: var(--pink-2);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .mobile-menu-btn:hover {
+            background: rgba(255, 110, 199, 0.2);
+        }
+
+        /* ===== BUTTONS ===== */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 14px 30px;
+            background: var(--gradient-3);
+            color: var(--white);
+            border: none;
+            border-radius: 100px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 8px 30px rgba(255, 61, 154, 0.35);
+            position: relative;
+            overflow: hidden;
+            font-family: 'Outfit', sans-serif;
+            letter-spacing: 0.01em;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transition: left 0.6s;
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 15px 45px rgba(255, 61, 154, 0.5);
+        }
+
+        .btn-ghost {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: var(--white);
+            box-shadow: none;
+            backdrop-filter: blur(10px);
+        }
+
+        .btn-ghost:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 110, 199, 0.5);
+            box-shadow: 0 10px 30px rgba(255, 61, 154, 0.2);
+        }
+
+        .btn-sm {
+            padding: 9px 20px;
+            font-size: 0.85rem;
+        }
+
+        /* ===== HERO ===== */
+        .hero {
+            padding: 160px 0 100px;
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+        }
+
+        .hero-content {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 60px;
+            align-items: center;
+            width: 100%;
+        }
+
+        .hero-left {
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 18px;
+            background: rgba(255, 110, 199, 0.08);
+            border: 1px solid rgba(255, 110, 199, 0.25);
+            border-radius: 100px;
+            font-size: 0.85rem;
+            color: var(--pink-2);
+            font-weight: 500;
+            margin-bottom: 28px;
+            backdrop-filter: blur(10px);
+        }
+
+        .hero-badge .status-dot {
+            width: 8px;
+            height: 8px;
+            background: #4ade80;
+            border-radius: 50%;
+            box-shadow: 0 0 12px #4ade80;
+            animation: pulse 2s infinite;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            font-weight: 800;
+            line-height: 1.05;
+            margin-bottom: 20px;
+            letter-spacing: -0.04em;
+        }
+
+        .hero h1 .hi {
+            font-family: 'Caveat', cursive;
+            font-weight: 700;
+            font-size: 1.15em;
+            background: var(--gradient-text);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            display: inline-block;
+            transform: rotate(-3deg);
+        }
+
+        .hero h1 .name-gradient {
+            background: var(--gradient-text);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            display: inline-block;
+            position: relative;
+        }
+
+        .hero-role {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 30px;
+            font-weight: 500;
+        }
+
+        .hero-role .role-line {
+            width: 40px;
+            height: 2px;
+            background: var(--gradient-3);
+            border-radius: 2px;
+        }
+
+        .hero p {
+            font-size: 1.05rem;
+            color: rgba(255, 255, 255, 0.65);
+            margin-bottom: 18px;
+            max-width: 560px;
+            line-height: 1.75;
+        }
+
+        .hero-btns {
+            display: flex;
+            gap: 14px;
+            flex-wrap: wrap;
+            margin-top: 36px;
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 40px;
+            margin-top: 50px;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 110, 199, 0.15);
+        }
+
+        .stat-item .stat-num {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 2rem;
+            font-weight: 700;
+            background: var(--gradient-text);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            display: block;
+            line-height: 1;
+        }
+
+        .stat-item .stat-label {
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.5);
+            margin-top: 6px;
+        }
+
+        /* Hero Image */
+        .hero-right {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .hero-image-wrapper {
+            position: relative;
+            width: 100%;
+            max-width: 440px;
+        }
+
+        .hero-image-wrapper::before {
+            content: '';
+            position: absolute;
+            inset: -20px;
+            background: var(--gradient-1);
+            border-radius: 50%;
+            filter: blur(60px);
+            opacity: 0.5;
+            animation: pulse 4s ease-in-out infinite;
+        }
+
+        .hero-image-ring {
+            position: absolute;
+            inset: -15px;
+            border: 2px dashed rgba(255, 110, 199, 0.4);
+            border-radius: 50%;
+            animation: spin 30s linear infinite;
+        }
+
+        .hero-image-ring::before {
+            content: '';
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            width: 12px;
+            height: 12px;
+            background: var(--gradient-3);
+            border-radius: 50%;
+            box-shadow: 0 0 20px var(--pink-3);
+            transform: translateX(-50%);
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .hero-image {
+            width: 100%;
+            aspect-ratio: 1;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 5px solid rgba(255, 255, 255, 0.1);
+            box-shadow: var(--shadow-glow);
+            position: relative;
+            z-index: 1;
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .hero-image:hover {
+            transform: scale(1.03) rotate(2deg);
+        }
+
+        /* Floating Badges */
+        .float-badge {
+            position: absolute;
+            padding: 12px 18px;
+            background: rgba(26, 10, 31, 0.8);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 110, 199, 0.3);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            z-index: 3;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .float-badge i {
+            font-size: 1.2rem;
+            background: var(--gradient-3);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .float-badge-1 {
+            top: 10%;
+            left: -20px;
+            animation-delay: 0s;
+        }
+
+        .float-badge-2 {
+            bottom: 15%;
+            right: -30px;
+            animation-delay: 2s;
+        }
+
+        .float-badge-3 {
+            bottom: 5%;
+            left: 10%;
+            animation-delay: 4s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+
+        /* ===== ABOUT ===== */
+        .about {
+            padding: 120px 0;
+            position: relative;
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 70px;
+            align-items: center;
+        }
+
+        .about-image-wrapper {
+            position: relative;
+        }
+
+        .about-image-wrapper::before {
+            content: '';
+            position: absolute;
+            inset: -20px;
+            background: var(--gradient-1);
+            border-radius: var(--radius-lg);
+            filter: blur(40px);
+            opacity: 0.35;
+        }
+
+        .about-image {
+            width: 100%;
+            height: 560px;
+            object-fit: cover;
+            border-radius: var(--radius-lg);
+            position: relative;
+            z-index: 1;
+            border: 2px solid rgba(255, 110, 199, 0.3);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .about-image-wrapper .corner-dot {
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            border-radius: 20px;
+            background: var(--gradient-3);
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 15px 40px rgba(255, 61, 154, 0.5);
+            animation: float 5s ease-in-out infinite;
+        }
+
+        .about-image-wrapper .corner-dot i {
+            font-size: 2rem;
+            color: var(--white);
+        }
+
+        .corner-dot-1 {
+            top: -25px;
+            right: -25px;
+        }
+
+        .corner-dot-2 {
+            bottom: -25px;
+            left: -25px;
+            animation-delay: 2s;
+        }
+
+        .about-content h3 {
+            font-size: clamp(1.8rem, 3vw, 2.4rem);
+            margin-bottom: 20px;
+            letter-spacing: -0.02em;
+        }
+
+        .about-content h3 em {
+            font-family: 'Caveat', cursive;
+            font-style: normal;
+            background: var(--gradient-text);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .about-content p {
+            color: rgba(255, 255, 255, 0.65);
+            margin-bottom: 18px;
+            font-size: 1rem;
+            line-height: 1.8;
+        }
+
+        /* Skills */
+        .skills {
+            margin-top: 40px;
+            display: grid;
+            gap: 22px;
+        }
+
+        .skill-item {
+            position: relative;
+        }
+
+        .skill-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-weight: 500;
+            font-size: 0.92rem;
+        }
+
+        .skill-header span:first-child {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--white);
+        }
+
+        .skill-header span:first-child i {
+            color: var(--pink-3);
+        }
+
+        .skill-header span:last-child {
+            font-family: 'Space Grotesk', sans-serif;
+            color: var(--pink-2);
+            font-weight: 600;
+        }
+
+        .skill-bar {
+            height: 8px;
+            background: rgba(255, 255, 255, 0.06);
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .skill-level {
+            height: 100%;
+            background: var(--gradient-3);
+            border-radius: 10px;
+            position: relative;
+            box-shadow: 0 0 20px rgba(255, 61, 154, 0.5);
+            width: 0;
+            transition: width 1.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .skill-level::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 20px;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.6));
+            border-radius: 10px;
+            animation: shine 2s infinite;
+        }
+
+        @keyframes shine {
+            0% { opacity: 0; transform: translateX(-100%); }
+            50% { opacity: 1; }
+            100% { opacity: 0; transform: translateX(100%); }
+        }
+
+        /* ===== PROJECTS ===== */
+        .projects {
+            padding: 120px 0;
+            position: relative;
+        }
+
+        .filter-wrapper {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 50px;
+        }
+
+        .project-filter {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            padding: 8px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 110, 199, 0.15);
+            border-radius: 100px;
+            backdrop-filter: blur(10px);
+        }
+
+        .filter-btn {
+            padding: 10px 22px;
+            background: transparent;
+            border: none;
+            border-radius: 100px;
+            color: rgba(255, 255, 255, 0.6);
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.88rem;
+        }
+
+        .filter-btn:hover {
+            color: var(--white);
+        }
+
+        .filter-btn.active {
+            background: var(--gradient-3);
+            color: var(--white);
+            box-shadow: 0 8px 25px rgba(255, 61, 154, 0.4);
+        }
+
+        .project-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+            gap: 28px;
+        }
+
+        .project-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 110, 199, 0.15);
+            border-radius: var(--radius);
+            overflow: hidden;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            backdrop-filter: blur(10px);
+            position: relative;
+        }
+
+        .project-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: var(--gradient-1);
+            opacity: 0;
+            transition: opacity 0.5s;
+            z-index: 0;
+        }
+
+        .project-card:hover::before {
+            opacity: 0.08;
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(255, 110, 199, 0.5);
+            box-shadow: 0 25px 60px rgba(255, 61, 154, 0.3);
+        }
+
+        .project-img-wrapper {
+            height: 220px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .project-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .project-card:hover .project-img {
+            transform: scale(1.1);
+        }
+
+        .project-content {
+            padding: 26px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .project-title {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            color: var(--white);
+            font-weight: 600;
+            letter-spacing: -0.01em;
+        }
+
+        .project-description {
+            color: rgba(255, 255, 255, 0.6);
+            margin-bottom: 18px;
+            font-size: 0.92rem;
+            line-height: 1.65;
+        }
+
+        .project-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+
+        .tag {
+            background: rgba(255, 110, 199, 0.1);
+            color: var(--pink-2);
+            padding: 5px 14px;
+            border-radius: 100px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            border: 1px solid rgba(255, 110, 199, 0.25);
+        }
+
+        /* ===== AWARDS ===== */
+        .awards {
+            padding: 120px 0;
+            position: relative;
+        }
+
+        .awards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 24px;
+            margin-top: 40px;
+        }
+
+        .award-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 110, 199, 0.15);
+            border-radius: var(--radius);
+            padding: 20px;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .award-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--gradient-3);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.5s;
+        }
+
+        .award-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .award-card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(255, 110, 199, 0.5);
+            box-shadow: 0 25px 60px rgba(255, 61, 154, 0.25);
+        }
+
+        .award-image {
+            width: 100%;
+            height: 200px;
+            overflow: hidden;
+            border-radius: var(--radius-sm);
+            margin-bottom: 18px;
+            position: relative;
+        }
+
+        .award-image::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, transparent 50%, rgba(26, 10, 31, 0.7) 100%);
+        }
+
+        .award-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .award-card:hover .award-image img {
+            transform: scale(1.1);
+        }
+
+        .award-title {
+            font-size: 1.05rem;
+            margin-bottom: 8px;
+            color: var(--white);
+            font-weight: 600;
+        }
+
+        .award-description {
+            font-size: 0.88rem;
+            color: rgba(255, 255, 255, 0.55);
+            margin-bottom: 14px;
+        }
+
+        .award-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 14px;
+            border-top: 1px dashed rgba(255, 110, 199, 0.2);
+            font-size: 0.78rem;
+        }
+
+        .award-date, .award-issuer {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-weight: 500;
+        }
+
+        .award-date {
+            color: var(--pink-2);
+        }
+
+        .award-issuer {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        /* ===== CONTACT ===== */
+        .contact {
+            padding: 120px 0;
+            position: relative;
+        }
+
+        .contact-content {
+            display: grid;
+            grid-template-columns: 1fr 1.1fr;
+            gap: 50px;
+        }
+
+        .contact-info h3 {
+            font-size: clamp(1.8rem, 3vw, 2.2rem);
+            margin-bottom: 20px;
+            letter-spacing: -0.02em;
+        }
+
+        .contact-info h3 em {
+            font-family: 'Caveat', cursive;
+            font-style: normal;
+            background: var(--gradient-text);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .contact-info > p {
+            color: rgba(255, 255, 255, 0.6);
+            margin-bottom: 30px;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 16px;
+            padding: 16px 20px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 110, 199, 0.15);
+            border-radius: var(--radius-sm);
+            transition: all 0.4s;
+            backdrop-filter: blur(10px);
+        }
+
+        .contact-item:hover {
+            transform: translateX(8px);
+            border-color: rgba(255, 110, 199, 0.5);
+            background: rgba(255, 110, 199, 0.05);
+        }
+
+        .contact-item i {
+            font-size: 1rem;
+            width: 44px;
+            height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--gradient-3);
+            border-radius: 14px;
+            flex-shrink: 0;
+            color: var(--white);
+            box-shadow: 0 8px 20px rgba(255, 61, 154, 0.35);
+        }
+
+        .contact-item h4 {
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.5);
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 2px;
+        }
+
+        .contact-link {
+            color: var(--white);
+            text-decoration: none;
+            transition: color 0.3s;
+            font-size: 0.95rem;
+            font-weight: 500;
+        }
+
+        .contact-link:hover {
+            color: var(--pink-2);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-top: 30px;
+        }
+
+        .social-links a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 48px;
+            height: 48px;
+            background: rgba(255, 255, 255, 0.03);
+            color: var(--white);
+            border-radius: 14px;
+            text-decoration: none;
+            transition: all 0.4s;
+            font-size: 1.15rem;
+            border: 1px solid rgba(255, 110, 199, 0.2);
+            backdrop-filter: blur(10px);
+        }
+
+        .social-links a:hover {
+            background: var(--gradient-3);
+            transform: translateY(-6px) scale(1.05);
+            border-color: transparent;
+            box-shadow: 0 15px 35px rgba(255, 61, 154, 0.45);
+        }
+
+        .contact-form {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 110, 199, 0.15);
+            padding: 40px;
+            border-radius: var(--radius);
+            backdrop-filter: blur(20px);
+            position: relative;
+        }
+
+        .contact-form::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: var(--radius);
+            padding: 1px;
+            background: var(--gradient-1);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            opacity: 0.3;
+            pointer-events: none;
+        }
+
+        /* ===== FORMS ===== */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.88rem;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 14px 18px;
+            border: 1px solid rgba(255, 110, 199, 0.2);
+            border-radius: 14px;
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.95rem;
+            transition: all 0.3s;
+            background: rgba(255, 255, 255, 0.03);
+            color: var(--white);
+        }
+
+        .form-control::placeholder {
+            color: rgba(255, 255, 255, 0.3);
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--pink-3);
+            background: rgba(255, 110, 199, 0.05);
+            box-shadow: 0 0 0 4px rgba(255, 110, 199, 0.1);
+        }
+
+        textarea.form-control {
+            min-height: 130px;
+            resize: vertical;
+        }
+
+        /* ===== MODAL ===== */
+        .modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(15, 5, 18, 0.85);
+            backdrop-filter: blur(20px);
+            z-index: 1100;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: rgba(26, 10, 31, 0.95);
+            border: 1px solid rgba(255, 110, 199, 0.3);
+            border-radius: var(--radius-lg);
+            width: 100%;
+            max-width: 460px;
+            box-shadow: 0 25px 80px rgba(255, 61, 154, 0.3);
+            animation: modalSlideIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+            max-height: 90vh;
+            overflow-y: auto;
+            backdrop-filter: blur(40px);
+        }
+
+        @keyframes modalSlideIn {
+            from { opacity: 0; transform: translateY(-30px) scale(0.95); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        .modal-header {
+            padding: 24px 30px;
+            border-bottom: 1px solid rgba(255, 110, 199, 0.15);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-header h3 {
+            color: var(--white);
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .modal-header h3 i {
+            background: var(--gradient-3);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .modal-close {
+            background: rgba(255, 255, 255, 0.05);
+            border: none;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            font-size: 1.3rem;
+            color: var(--white);
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            line-height: 1;
+        }
+
+        .modal-close:hover {
+            background: var(--gradient-3);
+            transform: rotate(90deg);
+        }
+
+        .modal-body {
+            padding: 30px;
+        }
+
+        .login-header {
+            text-align: center;
+            margin-bottom: 28px;
+        }
+
+        .login-icon {
+            font-size: 2.5rem;
+            background: var(--gradient-3);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 12px;
+            display: block;
+        }
+
+        .login-header h2 {
+            color: var(--white);
+            margin-bottom: 6px;
+            font-size: 1.5rem;
+        }
+
+        .login-header p {
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.88rem;
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            padding: 80px 0 30px;
+            position: relative;
+            border-top: 1px solid rgba(255, 110, 199, 0.15);
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 50px;
+        }
+
+        .footer-col h3 {
+            font-size: 1rem;
+            margin-bottom: 20px;
+            color: var(--white);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .footer-col p {
+            color: rgba(255, 255, 255, 0.55);
+            font-size: 0.9rem;
+            line-height: 1.7;
+        }
+
+        .footer-logo {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: var(--gradient-text);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 15px;
+            display: inline-block;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.55);
+            text-decoration: none;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.88rem;
+        }
+
+        .footer-links a:hover {
+            color: var(--pink-2);
+            transform: translateX(5px);
+        }
+
+        .footer-links a i {
+            font-size: 0.75rem;
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 110, 199, 0.1);
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        .copyright .heart {
+            color: var(--pink-3);
+            animation: heartbeat 1.5s infinite;
+            display: inline-block;
+        }
+
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+
+        /* ===== ALERTS ===== */
+        #alert-container {
+            position: fixed;
+            top: 100px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1050;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            pointer-events: none;
+        }
+
+        .alert {
+            background: rgba(26, 10, 31, 0.95);
+            backdrop-filter: blur(20px);
+            color: var(--white);
+            padding: 16px 22px;
+            border-radius: 14px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            min-width: 300px;
+            max-width: 500px;
+            border: 1px solid rgba(255, 110, 199, 0.3);
+            border-left: 4px solid var(--pink-3);
+            animation: alertSlideIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+            pointer-events: auto;
+            font-size: 0.9rem;
+        }
+
+        @keyframes alertSlideIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .alert-success { border-left-color: #4ade80; }
+        .alert-error { border-left-color: #f87171; }
+
+        .alert-close {
+            background: none;
+            border: none;
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 1.3rem;
+            cursor: pointer;
+            line-height: 1;
+            margin-left: 15px;
+            transition: color 0.3s;
+        }
+
+        .alert-close:hover {
+            color: var(--white);
+        }
+
+        /* ===== NO PROJECTS ===== */
+        #no-projects {
+            display: none;
+            text-align: center;
+            padding: 60px 20px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px dashed rgba(255, 110, 199, 0.3);
+            border-radius: var(--radius);
+        }
+
+        #no-projects i {
+            font-size: 3.5rem;
+            background: var(--gradient-3);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 18px;
+            display: block;
+        }
+
+        #no-projects h3 {
+            color: var(--white);
+            margin-bottom: 8px;
+        }
+
+        #no-projects p {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        /* ===== SCROLL REVEAL ===== */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 1024px) {
+            .hero-content,
+            .about-grid,
+            .contact-content {
+                grid-template-columns: 1fr;
+                gap: 50px;
+            }
+
+            .hero-right {
+                order: -1;
+                max-width: 400px;
+                margin: 0 auto;
+            }
+
+            .about-image-wrapper {
+                max-width: 400px;
+                margin: 0 auto;
+            }
+
+            .about-image {
+                height: 480px;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            #header {
+                top: 12px;
+                width: calc(100% - 24px);
+            }
+
+            .navbar {
+                padding: 12px 18px;
+            }
+
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: calc(100% + 10px);
+                left: 0;
+                width: 100%;
+                background: rgba(26, 10, 31, 0.98);
+                backdrop-filter: blur(30px);
+                flex-direction: column;
+                padding: 20px;
+                border-radius: var(--radius);
+                border: 1px solid rgba(255, 110, 199, 0.3);
+                gap: 4px;
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .nav-links a {
+                width: 100%;
+                text-align: center;
+                padding: 12px;
+            }
+
+            .mobile-menu-btn {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .hero {
+                padding: 130px 0 60px;
+                min-height: auto;
+            }
+
+            .hero-stats {
+                gap: 25px;
+                flex-wrap: wrap;
+            }
+
+            .stat-item .stat-num {
+                font-size: 1.6rem;
+            }
+
+            .float-badge {
+                padding: 10px 14px;
+                font-size: 0.75rem;
+            }
+
+            .float-badge i {
+                font-size: 1rem;
+            }
+
+            .about-image {
+                height: 400px;
+            }
+
+            .section-title {
+                margin-bottom: 15px;
+            }
+
+            .contact-form {
+                padding: 28px 22px;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+
+            .project-grid,
+            .awards-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 0 18px;
+            }
+
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+
+            .hero-btns {
+                flex-direction: column;
+                width: 100%;
+            }
+
+            .hero-btns .btn {
+                width: 100%;
+            }
+
+            .hero-stats {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .filter-wrapper {
+                padding: 0;
+            }
+
+            .project-filter {
+                border-radius: var(--radius-sm);
+                width: 100%;
+                justify-content: center;
+            }
+
+            .corner-dot {
+                width: 60px;
+                height: 60px;
+            }
+
+            .corner-dot i {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Background -->
+    <div class="bg-canvas"></div>
+    <div class="bg-blobs">
+        <div class="blob"></div>
+        <div class="blob"></div>
+        <div class="blob"></div>
+    </div>
+    <div class="cursor-glow" id="cursorGlow"></div>
+
+    <!-- Header -->
+    <header id="header">
+        <div class="container">
+            <nav class="navbar">
+                <a href="#home" class="logo">
+                    <span class="logo-dot"></span>
+                    Yola<span style="background: var(--gradient-3); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">.dev</span>
+                </a>
+                
+                <ul class="nav-links" id="navLinks">
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#projects">Projects</a></li>
+                    <li><a href="#awards">Awards</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                    <li>
+                        <button id="login-btn" class="btn btn-sm" style="background: rgba(255,110,199,0.15); box-shadow:none; border:1px solid rgba(255,110,199,0.3);">
+                            <i class="fas fa-user-shield"></i> Admin
+                        </button>
+                    </li>
+                </ul>
+                
+                <button class="mobile-menu-btn" id="mobileMenuBtn">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Alert Container -->
+    <div id="alert-container"></div>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-left reveal">
+                    <div class="hero-badge">
+                        <span class="status-dot"></span>
+                        Available for collaboration
+                    </div>
+                    
+                    <h1>
+                        <span class="hi">Hai,</span> aku<br>
+                        <span class="name-gradient">Yola Anggraeni</span> ✦
+                    </h1>
+                    
+                    <div class="hero-role">
+                        <span class="role-line"></span>
+                        Siswi Rekayasa Perangkat Lunak
+                    </div>
+                    
+                    <p>
+                        Aku suka ngoding, bikin desain web, dan explore teknologi baru. 
+                        Buat aku, coding bukan cuma soal logika — tapi juga soal <strong style="color: var(--pink-2);">estetika</strong> dan <strong style="color: var(--pink-2);">kreativitas</strong>. 💖
+                    </p>
+                    <p>
+                        Di sini kamu bisa lihat proyek, penghargaan, dan perjalanan belajar aku di dunia IT.
+                    </p>
+
+                    <div class="hero-btns">
+                        <a href="#projects" class="btn">
+                            <i class="fas fa-rocket"></i> Lihat Karya
+                        </a>
+                        <a href="#contact" class="btn btn-ghost">
+                            <i class="fas fa-comment-dots"></i> Ngobrol Yuk
+                        </a>
+                    </div>
+
+                    <div class="hero-stats">
+                        <div class="stat-item">
+                            <span class="stat-num">10+</span>
+                            <span class="stat-label">Projects</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-num">6+</span>
+                            <span class="stat-label">Penghargaan</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-num">2+</span>
+                            <span class="stat-label">Tahun Belajar</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="hero-right reveal">
+                    <div class="hero-image-wrapper">
+                        <div class="hero-image-ring"></div>
+                        <img src="assets/jpg13.jpeg" alt="Yola Anggraeni" class="hero-image"
+                             onerror="this.src='https://images.unsplash.com/photo-1494790108755-2616b786d4d9?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80'">
+                        
+                        <div class="float-badge float-badge-1">
+                            <i class="fas fa-code"></i> <span>Frontend Dev</span>
+                        </div>
+                        <div class="float-badge float-badge-2">
+                            <i class="fas fa-palette"></i> <span>UI/UX Design</span>
+                        </div>
+                        <div class="float-badge float-badge-3">
+                            <i class="fas fa-heart"></i> <span></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about">
+        <div class="container">
+            <div class="reveal">
+                <div style="text-align: center;">
+                    <span class="section-tag">Tentang Aku</span>
+                    <h2 class="section-title">Kenalan <em>yuk!</em></h2>
+                    <p class="section-subtitle">Sekilas tentang siapa aku dan apa yang aku kerjakan</p>
+                </div>
+            </div>
+            
+            <div class="about-grid">
+                <div class="about-image-wrapper reveal">
+                    <img src="assets/jpg12.jpeg" alt="Tentang Yola" class="about-image"
+                         onerror="this.src='https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80'">
+                    <div class="corner-dot corner-dot-1">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <div class="corner-dot corner-dot-2">
+                        <i class="fas fa-sparkles"></i>
+                    </div>
+                </div>
+                
+                <div class="about-content reveal">
+                    <h3>Hai! Aku <em>Yola Anggraeni</em> 👋</h3>
+                    <p>
+                        Siswi jurusan <strong style="color: var(--pink-2);">Rekayasa Perangkat Lunak (RPL)</strong> di SMKN 2 Karanganyar. 
+                        Aku punya passion besar di dunia teknologi, terutama coding dan bikin aplikasi.
+                    </p>
+                    <p>
+                        Buat aku, belajar hal baru tuh seru banget! Aku selalu berusaha ngerjain semuanya dengan teliti 
+                        dan ngasih yang terbaik di setiap proyek. Harapanku, skill yang aku punya bisa terus berkembang 
+                        dan bermanfaat buat masa depan aku di bidang IT. ✨
+                    </p>
+                    
+                    <div class="skills">
+                        <div class="skill-item">
+                            <div class="skill-header">
+                                <span><i class="fas fa-code"></i> HTML / CSS</span>
+                                <span>95%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-level" data-width="95%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-header">
+                                <span><i class="fab fa-js"></i> JavaScript</span>
+                                <span>90%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-level" data-width="90%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-header">
+                                <span><i class="fab fa-react"></i> React</span>
+                                <span>85%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-level" data-width="85%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-header">
+                                <span><i class="fas fa-pen-fancy"></i> UI / UX Design</span>
+                                <span>88%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-level" data-width="88%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="projects">
+        <div class="container">
+            <div class="reveal">
+                <div style="text-align: center;">
+                    <span class="section-tag">Portfolio</span>
+                    <h2 class="section-title">Karya <em>Terbaik</em> Aku</h2>
+                    <p class="section-subtitle">Kumpulan proyek yang udah aku kerjain selama belajar</p>
+                </div>
+            </div>
+            
+            <div class="filter-wrapper reveal">
+                <div class="project-filter">
+                    <button class="filter-btn active" data-filter="all">✨ Semua</button>
+                    <button class="filter-btn" data-filter="web">🌐 Web App</button>
+                    <button class="filter-btn" data-filter="mobile">📱 Mobile</button>
+                    <button class="filter-btn" data-filter="design">🎨 UI/UX</button>
+                    <button class="filter-btn" data-filter="ecommerce">🛍️ E-commerce</button>
+                </div>
+            </div>
+            
+            <div id="project-grid" class="project-grid"></div>
+            
+            <div id="no-projects">
+                <i class="fas fa-folder-open"></i>
+                <h3>Belum ada proyek nih</h3>
+                <p>Login sebagai admin buat nambahin proyek</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Awards Section -->
+    <section id="awards" class="awards">
+        <div class="container">
+            <div class="reveal">
+                <div style="text-align: center;">
+                    <span class="section-tag">Achievements</span>
+                    <h2 class="section-title">Piagam <em>&</em> Penghargaan</h2>
+                    <p class="section-subtitle">Bukti perjalanan dan pencapaian yang udah aku raih</p>
+                </div>
+            </div>
+    
+            <div class="awards-grid">
+                <div class="award-card reveal">
+                    <div class="award-image">
+                        <img src="assets/jpg3.jpeg" onerror="this.src='https://images.unsplash.com/photo-1567427017947-545c5f8d16ad?w=800'">
+                    </div>
+                    <h3 class="award-title">Piagam Paskibra</h3>
+                    <p class="award-description">Paskibra tingkat kecamatan</p>
+                    <div class="award-meta">
+                        <span class="award-date"><i class="fas fa-calendar"></i> 17 Agt 2023</span>
+                        <span class="award-issuer"><i class="fas fa-award"></i> Kecamatan</span>
+                    </div>
+                </div>
+    
+                <div class="award-card reveal">
+                    <div class="award-image">
+                        <img src="assets/jpg4.jpeg" onerror="this.src='https://images.unsplash.com/photo-1523580494863-6f3031224c94?w=800'">
+                    </div>
+                    <h3 class="award-title">Juara 3 Fashion Show</h3>
+                    <p class="award-description">Lomba Fashion Show Classmeeting</p> 
+                    <div class="award-meta">
+                        <span class="award-date"><i class="fas fa-calendar"></i> Nov 2023</span>
+                        <span class="award-issuer"><i class="fas fa-award"></i> SMK N Jumantono</span>
+                    </div>
+                </div>
+
+                <div class="award-card reveal">
+                    <div class="award-image">
+                        <img src="assets/jpg8.jpeg" onerror="this.src='https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=800'">
+                    </div>
+                    <h3 class="award-title">Piagam Penghargaan</h3>
+                    <p class="award-description">Persaudaraan Setia Hati Terate</p>
+                    <div class="award-meta">
+                        <span class="award-date"><i class="fas fa-calendar"></i> 7 Jul 2024</span>
+                        <span class="award-issuer"><i class="fas fa-award"></i> Madiun</span>
+                    </div>
+                </div>
+    
+                <div class="award-card reveal">
+                    <div class="award-image">
+                        <img src="assets/jpg5.jpeg" onerror="this.src='https://images.unsplash.com/photo-1588072432836-e10032774350?w=800'">
+                    </div>
+                    <h3 class="award-title">Sertifikat Cerdas Cermat</h3>
+                    <p class="award-description">Sertifikat TPQ</p>
+                    <div class="award-meta">
+                        <span class="award-date"><i class="fas fa-calendar"></i> 3 Apr 2019</span>
+                        <span class="award-issuer"><i class="fas fa-award"></i> Kecamatan</span>
+                    </div>
+                </div>
+    
+                <div class="award-card reveal">
+                    <div class="award-image">
+                        <img src="assets/jpg6.jpeg" onerror="this.src='https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?w=800'">
+                    </div>
+                    <h3 class="award-title">Juara 2 Mewarnai</h3>
+                    <p class="award-description">Lomba mewarnai tingkat TPQ</p>
+                    <div class="award-meta">
+                        <span class="award-date"><i class="fas fa-calendar"></i> 28 Des 2016</span>
+                        <span class="award-issuer"><i class="fas fa-award"></i> TPQ</span>
+                    </div>
+                </div>
+    
+                <div class="award-card reveal">
+                    <div class="award-image">
+                        <img src="assets/jpg7.jpeg" onerror="this.src='https://images.unsplash.com/photo-1526976668912-1a811878dd37?w=800'">
+                    </div>
+                    <h3 class="award-title">Piagam Pramuka</h3>
+                    <p class="award-description">Pramuka tingkat SD</p>
+                    <div class="award-meta">
+                        <span class="award-date"><i class="fas fa-calendar"></i> 21 Jan 2017</span>
+                        <span class="award-issuer"><i class="fas fa-award"></i> Kecamatan</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modal Login Admin -->
+    <div id="login-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-shield-halved"></i> Login Admin</h3>
+                <button class="modal-close" id="modalClose">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="login-header">
+                    <i class="fas fa-user-lock login-icon"></i>
+                    <h2>Welcome Back!</h2>
+                    <p>Masuk buat akses admin panel</p>
+                </div>
+                
+                <form id="login-form">
+                    <div class="form-group">
+                        <label for="admin-username">Username</label>
+                        <input type="text" id="admin-username" class="form-control" placeholder="Masukkan username" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="admin-password">Password</label>
+                        <input type="password" id="admin-password" class="form-control" placeholder="Masukkan password" required>
+                    </div>
+                    
+                    <button type="submit" class="btn" style="width: 100%; margin-top: 8px;">
+                        <i class="fas fa-arrow-right-to-bracket"></i> Login
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <div class="reveal">
+                <div style="text-align: center;">
+                    <span class="section-tag">Contact</span>
+                    <h2 class="section-title">Let's <em>Connect!</em></h2>
+                    <p class="section-subtitle">Punya pertanyaan atau mau kolaborasi? Hubungi aku ya!</p>
+                </div>
+            </div>
+            
+            <div class="contact-content">
+                <div class="contact-info reveal">
+                    <h3>Mari <em>Bekerja Sama</em> 🤝</h3>
+                    <p>Aku terbuka buat peluang kerja sama, proyek freelance, atau sekedar ngobrol soal teknologi dan desain. Jangan ragu buat reach out ya!</p>
+                    
+                    <div style="margin-top: 30px;">
+                        <div class="contact-item">
+                            <i class="fas fa-location-dot"></i>
+                            <div>
+                                <h4>Lokasi</h4>
+                                <p><a href="https://www.google.com/maps?q=Karanganyar,+Jawa+Tengah" target="_blank" class="contact-link">Karanganyar, Jawa Tengah</a></p>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-envelope"></i>
+                            <div>
+                                <h4>Email</h4>
+                                <p><a href="mailto:yolaanggra22@gmail.com" class="contact-link">yolaanggra22@gmail.com</a></p>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-phone"></i>
+                            <div>
+                                <h4>Telepon</h4>
+                                <p><a href="tel:+6282006614246" class="contact-link">+62 8200 6614 246</a></p>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-graduation-cap"></i>
+                            <div>
+                                <h4>Sekolah</h4>
+                                <p><a href="https://smkn2kra.sch.id/" target="_blank" class="contact-link">SMKN 2 Karanganyar</a></p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="social-links">
+                        <a href="https://github.com/yolaa22" target="_blank" title="GitHub"><i class="fab fa-github"></i></a>
+                        <a href="https://instagram.com/xyol.az" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="https://wa.me/6282006614246" target="_blank" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                        <a href="https://tiktok.com/@yolabtfl" target="_blank" title="TikTok"><i class="fab fa-tiktok"></i></a>
+                        <a href="https://linkedin.com" target="_blank" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                
+                <div class="contact-form reveal">
+                    <form action="https://formsubmit.co/yolaanggra22@gmail.com" method="POST">
+                        <input type="hidden" name="_captcha" value="false">
+                        <input type="hidden" name="_subject" value="Pesan Baru dari Website Portfolio">
+                        <input type="hidden" name="_template" value="table">
+                        <input type="hidden" name="_autoresponse" value="Terima kasih telah menghubungi saya. Pesan Anda sudah saya terima dan akan saya balas secepatnya.">
+                
+                        <div class="form-group">
+                            <label for="name">Nama Lengkap</label>
+                            <input type="text" id="name" name="Nama" class="form-control" placeholder="Masukkan nama kamu" required>
+                        </div>
+                
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="Email" class="form-control" placeholder="Masukkan email kamu" required>
+                        </div>
+                
+                        <div class="form-group">
+                            <label for="subject">Subjek</label>
+                            <input type="text" id="subject" name="Subjek" class="form-control" placeholder="Mau bahas apa nih?" required>
+                        </div>
+                
+                        <div class="form-group">
+                            <label for="message">Pesan</label>
+                            <textarea id="message" name="Pesan" class="form-control" placeholder="Tulis pesan kamu di sini..." required></textarea>
+                        </div>
+                
+                        <button type="submit" class="btn" style="width: 100%;">
+                            <i class="fas fa-paper-plane"></i> Kirim Pesan
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-col">
+                    <div class="footer-logo">Yola.dev ✦</div>
+                    <p>Portofolio Yola Anggraeni — Siswi RPL SMKN 2 Karanganyar. Menampilkan karya, penghargaan, dan pengembangan di bidang teknologi informasi.</p>
+                </div>
+                <div class="footer-col">
+                    <h3>Navigasi</h3>
+                    <ul class="footer-links">
+                        <li><a href="#home"><i class="fas fa-chevron-right"></i> Home</a></li>
+                        <li><a href="#about"><i class="fas fa-chevron-right"></i> About</a></li>
+                        <li><a href="#projects"><i class="fas fa-chevron-right"></i> Projects</a></li>
+                        <li><a href="#awards"><i class="fas fa-chevron-right"></i> Awards</a></li>
+                        <li><a href="#contact"><i class="fas fa-chevron-right"></i> Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Kontak</h3>
+                    <ul class="footer-links">
+                        <li><a href="mailto:yolaanggra22@gmail.com"><i class="fas fa-envelope"></i> yolaanggra22@gmail.com</a></li>
+                        <li><a href="tel:+6282006614246"><i class="fas fa-phone"></i> +62 8200 6614 246</a></li>
+                        <li><a href="https://www.google.com/maps?q=Karanganyar" target="_blank"><i class="fas fa-location-dot"></i> Karanganyar, Jateng</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Follow</h3>
+                    <ul class="footer-links">
+                        <li><a href="https://instagram.com/xyol.az" target="_blank"><i class="fab fa-instagram"></i> Instagram</a></li>
+                        <li><a href="https://github.com/yolaa22" target="_blank"><i class="fab fa-github"></i> GitHub</a></li>
+                        <li><a href="https://tiktok.com/@yolabtfl" target="_blank"><i class="fab fa-tiktok"></i> TikTok</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; <span id="current-year">2025</span> Yola Anggraeni. Made with <span class="heart">♥</span> in Karanganyar</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            let projects = JSON.parse(localStorage.getItem('portfolioProjects')) || [];
+            
+            const ADMIN_CREDENTIALS = {
+                username: 'admin',
+                password: 'admin123'
+            };
+            
+            const loginModal = document.getElementById('login-modal');
+            const loginForm = document.getElementById('login-form');
+            const modalClose = document.getElementById('modalClose');
+            const projectGrid = document.getElementById('project-grid');
+            const noProjects = document.getElementById('no-projects');
+            const filterBtns = document.querySelectorAll('.filter-btn');
+            const currentYear = document.getElementById('current-year');
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            const navLinks = document.getElementById('navLinks');
+            const loginBtn = document.getElementById('login-btn');
+            const cursorGlow = document.getElementById('cursorGlow');
+            
+            // Current year
+            currentYear.textContent = new Date().getFullYear();
+            
+            // Cursor glow effect
+            document.addEventListener('mousemove', (e) => {
+                cursorGlow.style.left = e.clientX + 'px';
+                cursorGlow.style.top = e.clientY + 'px';
+            });
+            
+            // Mobile menu
+            mobileMenuBtn.addEventListener('click', function() {
+                navLinks.classList.toggle('active');
+                this.innerHTML = navLinks.classList.contains('active') 
+                    ? '<i class="fas fa-times"></i>' 
+                    : '<i class="fas fa-bars"></i>';
+            });
+            
+            document.querySelectorAll('.nav-links a').forEach(link => {
+                link.addEventListener('click', () => {
+                    navLinks.classList.remove('active');
+                    mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+                });
+            });
+            
+            // Scroll reveal
+            const revealElements = document.querySelectorAll('.reveal');
+            
+            const revealObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                        
+                        // Animate skill bars
+                        if (entry.target.querySelector('.skill-level')) {
+                            entry.target.querySelectorAll('.skill-level').forEach(bar => {
+                                const width = bar.getAttribute('data-width');
+                                setTimeout(() => {
+                                    bar.style.width = width;
+                                }, 300);
+                            });
+                        }
+                    }
+                });
+            }, { threshold: 0.15 });
+            
+            revealElements.forEach(el => revealObserver.observe(el));
+            
+            // Header scroll effect
+            const header = document.getElementById('header');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 50) {
+                    header.style.top = '12px';
+                    header.querySelector('.navbar').style.padding = '10px 20px';
+                } else {
+                    header.style.top = '20px';
+                    header.querySelector('.navbar').style.padding = '14px 24px';
+                }
+            });
+            
+            // Load projects
+            loadProjects();
+            
+            // Login modal
+            loginBtn.addEventListener('click', function() {
+                loginModal.classList.add('active');
+            });
+            
+            loginForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const username = document.getElementById('admin-username').value;
+                const password = document.getElementById('admin-password').value;
+                
+                if (username === ADMIN_CREDENTIALS.username && password === ADMIN_CREDENTIALS.password) {
+                    localStorage.setItem('adminLoggedIn', 'true');
+                    showAlert('Login berhasil! Mengarahkan ke Admin Panel...', 'success');
+                    setTimeout(() => {
+                        window.location.href = 'admin.html';
+                    }, 1500);
+                } else {
+                    showAlert('Username atau password salah!', 'error');
+                }
+            });
+            
+            modalClose.addEventListener('click', () => {
+                loginModal.classList.remove('active');
+            });
+            
+            window.addEventListener('click', function(e) {
+                if (e.target === loginModal) {
+                    loginModal.classList.remove('active');
+                }
+            });
+            
+            // Filter projects
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    filterBtns.forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    const filter = this.getAttribute('data-filter');
+                    loadProjects(filter);
+                });
+            });
+            
+            function loadProjects(filter = 'all') {
+                projectGrid.innerHTML = '';
+                
+                let filteredProjects = projects;
+                if (filter !== 'all') {
+                    filteredProjects = projects.filter(p => p.category === filter);
+                }
+                
+                if (filteredProjects.length === 0) {
+                    noProjects.style.display = 'block';
+                    projectGrid.style.display = 'none';
+                    return;
+                }
+                
+                noProjects.style.display = 'none';
+                projectGrid.style.display = 'grid';
+                
+                filteredProjects.forEach((project, index) => {
+                    const projectCard = document.createElement('div');
+                    projectCard.className = 'project-card reveal';
+                    projectCard.style.transitionDelay = (index * 0.05) + 's';
+                    
+                    projectCard.innerHTML = `
+                        <div class="project-img-wrapper">
+                            <img src="${project.image}" alt="${project.title}" class="project-img" onerror="this.src='https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80'">
+                        </div>
+                        <div class="project-content">
+                            <h3 class="project-title">${project.title}</h3>
+                            <p class="project-description">${project.description}</p>
+                            <div class="project-tags">
+                                ${project.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
+                            </div>
+                            ${project.link !== '#' ? `<a href="${project.link}" target="_blank" class="btn btn-sm"><i class="fas fa-external-link-alt"></i> Lihat Proyek</a>` : ''}
+                        </div>
+                    `;
+                    
+                    projectGrid.appendChild(projectCard);
+                    revealObserver.observe(projectCard);
+                });
+            }
+            
+            function showAlert(message, type = 'success') {
+                const alertContainer = document.getElementById('alert-container');
+                
+                const alert = document.createElement('div');
+                alert.className = `alert alert-${type}`;
+                alert.innerHTML = `
+                    <span>${message}</span>
+                    <button class="alert-close">&times;</button>
+                `;
+                
+                alertContainer.appendChild(alert);
+                
+                setTimeout(() => {
+                    alert.style.opacity = '0';
+                    alert.style.transform = 'translateY(-20px)';
+                    setTimeout(() => alert.remove(), 300);
+                }, 3500);
+                
+                alert.querySelector('.alert-close').addEventListener('click', () => {
+                    alert.remove();
+                });
+            }
+            
+            // Sample projects
+            if (projects.length === 0) {
+                projects = [
+                    {
+                        id: '1',
+                        title: 'Website E-commerce Fashion',
+                        description: 'Website e-commerce untuk toko fashion lokal dengan sistem keranjang belanja dan checkout.',
+                        category: 'ecommerce',
+                        date: '2023-06-15',
+                        image: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80',
+                        tags: ['HTML/CSS', 'JavaScript', 'PHP', 'MySQL'],
+                        link: '#'
+                    },
+                    {
+                        id: '2',
+                        title: 'Aplikasi Mobile To-Do List',
+                        description: 'Aplikasi mobile untuk manajemen tugas dengan fitur reminder dan kategori.',
+                        category: 'mobile',
+                        date: '2023-08-22',
+                        image: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80',
+                        tags: ['Kotlin', 'Android', 'SQLite', 'UI/UX'],
+                        link: '#'
+                    },
+                    {
+                        id: '3',
+                        title: 'Website Portofolio Pribadi',
+                        description: 'Website portofolio dengan tema pink aesthetic yang modern dan responsif.',
+                        category: 'web',
+                        date: '2023-10-05',
+                        image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80',
+                        tags: ['HTML/CSS', 'JavaScript', 'Responsive', 'Design'],
+                        link: '#'
+                    },
+                    {
+                        id: '4',
+                        title: 'Sistem Informasi Sekolah',
+                        description: 'Sistem informasi untuk manajemen data siswa dan guru di sekolah.',
+                        category: 'web',
+                        date: '2023-11-20',
+                        image: 'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80',
+                        tags: ['PHP', 'MySQL', 'Bootstrap', 'Laravel'],
+                        link: '#'
+                    }
+                ];
+                
+                localStorage.setItem('portfolioProjects', JSON.stringify(projects));
+                loadProjects();
+            }
+        });
+    </script>
+</body>
+</html>

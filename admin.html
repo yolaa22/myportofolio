@@ -1,0 +1,1122 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - Kelola Portofolio</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Quicksand:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-pink: #ff69b4;
+            --light-pink: #ffb6c1;  
+            --dark-pink: #db7093;
+            --soft-pink: #ffe4e9;
+            --pink-gradient: linear-gradient(135deg, #ff69b4 0%, #ffb6c1 100%);
+            --pink-shadow: 0 10px 20px rgba(255, 105, 180, 0.15);
+            --text-dark: #4a4a4a;
+            --text-light: #888;
+            --white: #ffffff;
+            --off-white: #fff9fb;
+            --gold: #FFD700;
+            --silver: #C0C0C0;
+            --bronze: #CD7F32;
+            --transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: var(--text-dark);
+            background-color: var(--off-white);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Admin */
+        .admin-header {
+            background: var(--pink-gradient);
+            color: var(--white);
+            padding: 20px 0;
+            box-shadow: 0 5px 15px rgba(255, 105, 180, 0.2);
+        }
+
+        .admin-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .admin-logo {
+            font-family: 'Quicksand', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--white);
+            text-decoration: none;
+        }
+
+        .admin-logo span {
+            color: #ffe4e9;
+        }
+
+        .admin-actions {
+            display: flex;
+            gap: 15px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 25px;
+            background: var(--white);
+            color: var(--primary-pink);
+            border: none;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            text-decoration: none;
+            transition: var(--transition);
+            box-shadow: var(--pink-shadow);
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(255, 105, 180, 0.25);
+        }
+
+        .btn-primary {
+            background: var(--pink-gradient);
+            color: var(--white);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--white);
+            color: var(--white);
+        }
+
+        /* Dashboard */
+        .admin-dashboard {
+            flex: 1;
+            padding: 40px 0;
+        }
+
+        .dashboard-header {
+            margin-bottom: 40px;
+        }
+
+        .dashboard-header h1 {
+            color: var(--dark-pink);
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .dashboard-header p {
+            color: var(--text-light);
+            font-size: 1.1rem;
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .dashboard-card {
+            background: var(--white);
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: var(--pink-shadow);
+            transition: var(--transition);
+            text-align: center;
+        }
+
+        .dashboard-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--pink-gradient);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-size: 1.8rem;
+            margin: 0 auto 15px;
+        }
+
+        .card-title {
+            font-size: 1.3rem;
+            color: var(--dark-pink);
+            margin: 0 0 10px;
+        }
+
+        .card-content {
+            color: var(--text-light);
+            font-size: 2rem;
+            font-weight: 700;
+        }
+
+        /* Tabs */
+        .admin-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            border-bottom: 2px solid var(--soft-pink);
+            padding-bottom: 10px;
+        }
+
+        .tab-btn {
+            padding: 12px 30px;
+            background: var(--white);
+            border: 2px solid var(--light-pink);
+            border-radius: 8px 8px 0 0;
+            color: var(--text-dark);
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .tab-btn:hover {
+            background: var(--soft-pink);
+        }
+
+        .tab-btn.active {
+            background: var(--pink-gradient);
+            color: var(--white);
+            border-color: var(--primary-pink);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Form */
+        .form-container {
+            background: var(--white);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: var(--pink-shadow);
+            margin-bottom: 40px;
+        }
+
+        .form-title {
+            color: var(--dark-pink);
+            font-size: 2rem;
+            margin-bottom: 30px;
+            text-align: center;
+            position: relative;
+            padding-bottom: 15px;
+        }
+
+        .form-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: var(--pink-gradient);
+            border-radius: 2px;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--text-dark);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid var(--light-pink);
+            border-radius: 10px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 1rem;
+            transition: var(--transition);
+            background-color: var(--off-white);
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary-pink);
+            box-shadow: 0 0 0 3px rgba(255, 105, 180, 0.2);
+        }
+
+        textarea.form-control {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+
+        .form-row .form-group {
+            flex: 1;
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 40px;
+        }
+
+        .btn-submit {
+            background: var(--pink-gradient);
+            color: var(--white);
+            padding: 12px 40px;
+            font-size: 1.1rem;
+        }
+
+        .btn-cancel {
+            background: transparent;
+            border: 2px solid var(--light-pink);
+            color: var(--text-dark);
+        }
+
+        /* Tabel */
+        .table-container {
+            background: var(--white);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: var(--pink-shadow);
+            margin-top: 30px;
+            overflow-x: auto;
+        }
+
+        .table-title {
+            color: var(--dark-pink);
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid var(--soft-pink);
+        }
+
+        th {
+            background: var(--pink-gradient);
+            color: var(--white);
+            font-weight: 600;
+        }
+
+        tr:hover {
+            background-color: rgba(255, 182, 193, 0.05);
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn-edit, .btn-delete {
+            padding: 6px 12px;
+            border-radius: 5px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            border: none;
+            transition: var(--transition);
+        }
+
+        .btn-edit {
+            background: #ffb6c1;
+            color: #fff;
+        }
+
+        .btn-edit:hover {
+            background: #ff69b4;
+        }
+
+        .btn-delete {
+            background: #ff4757;
+            color: #fff;
+        }
+
+        .btn-delete:hover {
+            background: #ff0000;
+        }
+
+        /* Alert */
+        .alert {
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        .alert-success {
+            background: #d4edda;
+            color: #155724;
+            border-left: 5px solid #28a745;
+        }
+
+        .alert-error {
+            background: #f8d7da;
+            color: #721c24;
+            border-left: 5px solid #dc3545;
+        }
+
+        /* Award Type Indicator */
+        .award-type {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .award-gold {
+            background: linear-gradient(135deg, #FFD700 0%, #FFC200 100%);
+            color: #333;
+        }
+
+        .award-silver {
+            background: linear-gradient(135deg, #C0C0C0 0%, #A0A0A0 100%);
+            color: #333;
+        }
+
+        .award-bronze {
+            background: linear-gradient(135deg, #CD7F32 0%, #B76E2A 100%);
+            color: #fff;
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 50px 20px;
+            color: var(--text-light);
+        }
+
+        .empty-state i {
+            font-size: 4rem;
+            color: var(--light-pink);
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        /* Footer */
+        .admin-footer {
+            background: linear-gradient(135deg, #ff69b4 0%, #ff1493 100%);
+            color: var(--white);
+            padding: 30px 0;
+            margin-top: 50px;
+            text-align: center;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .form-row {
+                flex-direction: column;
+                gap: 0;
+            }
+            
+            .form-actions {
+                flex-direction: column;
+            }
+            
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .admin-actions {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .admin-tabs {
+                flex-wrap: wrap;
+            }
+            
+            .table-title {
+                flex-direction: column;
+                gap: 15px;
+                align-items: flex-start;
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+                gap: 5px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="admin-header">
+        <div class="container">
+            <nav class="admin-nav">
+                <a href="index.html" class="admin-logo">Admin <span>Panel</span></a>
+                <div class="admin-actions">
+                    <a href="index.html" class="btn btn-outline">
+                        <i class="fas fa-home"></i> Kembali ke Portofolio
+                    </a>
+                    <button id="logout-btn" class="btn">
+                        <i class="fas fa-sign-out-alt"></i> Logout
+                    </button>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Alert Container -->
+    <div class="container">
+        <div id="alert" class="alert"></div>
+    </div>
+
+    <!-- Dashboard -->
+    <main class="admin-dashboard">
+        <div class="container">
+            <div class="dashboard-header">
+                <h1>Selamat Datang, Admin!</h1>
+                <p>Kelola portofolio Anda dari sini - proyek dan penghargaan</p>
+            </div>
+
+            <!-- Stats Cards -->
+            <div class="dashboard-grid">
+                <div class="dashboard-card">
+                    <div class="card-icon">
+                        <i class="fas fa-project-diagram"></i>
+                    </div>
+                    <h3 class="card-title">Total Proyek</h3>
+                    <div class="card-content" id="total-projects">0</div>
+                </div>
+
+                <div class="dashboard-card">
+                    <div class="card-icon">
+                        <i class="fas fa-trophy"></i>
+                    </div>
+                    <h3 class="card-title">Total Penghargaan</h3>
+                    <div class="card-content" id="total-awards">0</div>
+                </div>
+
+                <div class="dashboard-card">
+                    <div class="card-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3 class="card-title">Total Item</h3>
+                    <div class="card-content" id="total-items">0</div>
+                </div>
+            </div>
+
+            <!-- Tabs -->
+            <div class="admin-tabs">
+                <button class="tab-btn active" data-tab="projects">Kelola Proyek</button>
+                <button class="tab-btn" data-tab="awards">Kelola Penghargaan</button>
+            </div>
+
+            <!-- Projects Tab -->
+            <div id="projects-tab" class="tab-content active">
+                <!-- Form Tambah Proyek -->
+                <div class="form-container">
+                    <h2 class="form-title">Tambah Proyek Baru</h2>
+                    <form id="add-project-form">
+                        <input type="hidden" id="edit-project-id">
+                        
+                        <div class="form-group">
+                            <label for="project-title">Judul Proyek *</label>
+                            <input type="text" id="project-title" class="form-control" placeholder="Masukkan judul proyek" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="project-description">Deskripsi Proyek *</label>
+                            <textarea id="project-description" class="form-control" placeholder="Deskripsikan proyek Anda" required></textarea>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="project-category">Kategori *</label>
+                                <select id="project-category" class="form-control" required>
+                                    <option value="">Pilih Kategori</option>
+                                    <option value="web">Web App</option>
+                                    <option value="mobile">Mobile</option>
+                                    <option value="ecommerce">E-commerce</option>
+                                    <option value="design">UI/UX Design</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="project-date">Tanggal *</label>
+                                <input type="date" id="project-date" class="form-control" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="project-image">URL Gambar *</label>
+                            <input type="url" id="project-image" class="form-control" placeholder="https://example.com/image.jpg" required>
+                            <small style="color: var(--text-light); display: block; margin-top: 5px;">Gunakan URL gambar yang valid</small>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="project-tags">Tags * (pisahkan dengan koma)</label>
+                            <input type="text" id="project-tags" class="form-control" placeholder="React, Node.js, MongoDB, Design" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="project-link">Link Proyek (opsional)</label>
+                            <input type="url" id="project-link" class="form-control" placeholder="https://example.com">
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="button" id="cancel-project-btn" class="btn btn-cancel">Batal</button>
+                            <button type="submit" id="submit-project-btn" class="btn btn-submit">Simpan Proyek</button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Daftar Proyek -->
+                <div class="table-container">
+                    <div class="table-title">
+                        <h3>Daftar Proyek</h3>
+                        <button id="add-new-project-btn" class="btn btn-primary">
+                            <i class="fas fa-plus"></i> Tambah Proyek Baru
+                        </button>
+                    </div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>No.</th>
+                                <th>Judul</th>
+                                <th>Kategori</th>
+                                <th>Tanggal</th>
+                                <th>Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody id="projects-table-body">
+                            <!-- Data proyek akan diisi oleh JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Awards Tab -->
+            <div id="awards-tab" class="tab-content">
+                <!-- Form Tambah Penghargaan -->
+                <div class="form-container">
+                    <h2 class="form-title">Tambah Penghargaan Baru</h2>
+                    <form id="add-award-form">
+                        <input type="hidden" id="edit-award-id">
+                        
+                        <div class="form-group">
+                            <label for="award-title">Judul Penghargaan *</label>
+                            <input type="text" id="award-title" class="form-control" placeholder="Masukkan judul penghargaan" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="award-description">Deskripsi Penghargaan *</label>
+                            <textarea id="award-description" class="form-control" placeholder="Deskripsikan penghargaan ini" required></textarea>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="award-type">Tipe Penghargaan *</label>
+                                <select id="award-type" class="form-control" required>
+                                    <option value="">Pilih Tipe</option>
+                                    <option value="gold">Emas (Gold)</option>
+                                    <option value="silver">Perak (Silver)</option>
+                                    <option value="bronze">Perunggu (Bronze)</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="award-date">Tanggal *</label>
+                                <input type="date" id="award-date" class="form-control" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="award-issuer">Pemberi Penghargaan *</label>
+                            <input type="text" id="award-issuer" class="form-control" placeholder="Contoh: SMKN 2 Karanganyar" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="award-icon">Ikon (opsional)</label>
+                            <select id="award-icon" class="form-control">
+                                <option value="trophy">🏆 Trophy</option>
+                                <option value="medal">🥇 Medal</option>
+                                <option value="award">🎖️ Award</option>
+                                <option value="certificate">📜 Certificate</option>
+                                <option value="star">⭐ Star</option>
+                                <option value="crown">👑 Crown</option>
+                            </select>
+                            <small style="color: var(--text-light); display: block; margin-top: 5px;">Pilih ikon yang sesuai dengan penghargaan</small>
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="button" id="cancel-award-btn" class="btn btn-cancel">Batal</button>
+                            <button type="submit" id="submit-award-btn" class="btn btn-submit">Simpan Penghargaan</button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Daftar Penghargaan -->
+                <div class="table-container">
+                    <div class="table-title">
+                        <h3>Daftar Penghargaan</h3>
+                        <button id="add-new-award-btn" class="btn btn-primary">
+                            <i class="fas fa-plus"></i> Tambah Penghargaan Baru
+                        </button>
+                    </div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>No.</th>
+                                <th>Judul</th>
+                                <th>Tipe</th>
+                                <th>Tanggal</th>
+                                <th>Pemberi</th>
+                                <th>Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody id="awards-table-body">
+                            <!-- Data penghargaan akan diisi oleh JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="admin-footer">
+        <div class="container">
+            <p>&copy; 2024 Yola Anggraeni - SMKN 2 Karanganyar</p>
+            <p>Admin Panel Portofolio - Kelola Proyek dan Penghargaan</p>
+        </div>
+    </footer>
+
+    <script>
+        // Cek apakah user sudah login
+        document.addEventListener('DOMContentLoaded', function() {
+            const isLoggedIn = localStorage.getItem('adminLoggedIn') === 'true';
+            
+            if (!isLoggedIn) {
+                alert('Silakan login terlebih dahulu!');
+                window.location.href = 'index.html';
+                return;
+            }
+
+            // Set tanggal hari ini sebagai default
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('project-date').value = today;
+            document.getElementById('award-date').value = today;
+
+            // Inisialisasi data
+            let projects = JSON.parse(localStorage.getItem('portfolioProjects')) || [];
+            let awards = JSON.parse(localStorage.getItem('portfolioAwards')) || [];
+            let editingProjectId = null;
+            let editingAwardId = null;
+
+            // Load data awal
+            loadProjects();
+            loadAwards();
+            updateStats();
+
+            // Logout function
+            document.getElementById('logout-btn').addEventListener('click', function() {
+                localStorage.removeItem('adminLoggedIn');
+                window.location.href = 'index.html';
+            });
+
+            // Tab switching
+            document.querySelectorAll('.tab-btn').forEach(tab => {
+                tab.addEventListener('click', function() {
+                    const tabId = this.getAttribute('data-tab');
+                    
+                    // Remove active class from all tabs
+                    document.querySelectorAll('.tab-btn').forEach(t => t.classList.remove('active'));
+                    document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+                    
+                    // Add active class to clicked tab
+                    this.classList.add('active');
+                    document.getElementById(`${tabId}-tab`).classList.add('active');
+                    
+                    // Reset forms
+                    resetProjectForm();
+                    resetAwardForm();
+                });
+            });
+
+            // Projects form handling
+            document.getElementById('add-project-form').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const projectData = {
+                    id: editingProjectId || Date.now().toString(),
+                    title: document.getElementById('project-title').value,
+                    description: document.getElementById('project-description').value,
+                    category: document.getElementById('project-category').value,
+                    date: document.getElementById('project-date').value,
+                    image: document.getElementById('project-image').value,
+                    tags: document.getElementById('project-tags').value.split(',').map(tag => tag.trim()),
+                    link: document.getElementById('project-link').value || '#'
+                };
+
+                if (editingProjectId) {
+                    // Update existing project
+                    const index = projects.findIndex(p => p.id === editingProjectId);
+                    if (index !== -1) {
+                        projects[index] = projectData;
+                        showAlert('Proyek berhasil diperbarui!', 'success');
+                    }
+                } else {
+                    // Add new project
+                    projects.push(projectData);
+                    showAlert('Proyek berhasil ditambahkan!', 'success');
+                }
+
+                // Save to localStorage
+                localStorage.setItem('portfolioProjects', JSON.stringify(projects));
+
+                // Reset form and reload data
+                resetProjectForm();
+                loadProjects();
+                updateStats();
+            });
+
+            // Awards form handling
+            document.getElementById('add-award-form').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const awardData = {
+                    id: editingAwardId || Date.now().toString(),
+                    title: document.getElementById('award-title').value,
+                    description: document.getElementById('award-description').value,
+                    type: document.getElementById('award-type').value,
+                    date: document.getElementById('award-date').value,
+                    issuer: document.getElementById('award-issuer').value,
+                    icon: document.getElementById('award-icon').value
+                };
+
+                if (editingAwardId) {
+                    // Update existing award
+                    const index = awards.findIndex(a => a.id === editingAwardId);
+                    if (index !== -1) {
+                        awards[index] = awardData;
+                        showAlert('Penghargaan berhasil diperbarui!', 'success');
+                    }
+                } else {
+                    // Add new award
+                    awards.push(awardData);
+                    showAlert('Penghargaan berhasil ditambahkan!', 'success');
+                }
+
+                // Save to localStorage
+                localStorage.setItem('portfolioAwards', JSON.stringify(awards));
+
+                // Reset form and reload data
+                resetAwardForm();
+                loadAwards();
+                updateStats();
+            });
+
+            // Cancel buttons
+            document.getElementById('cancel-project-btn').addEventListener('click', resetProjectForm);
+            document.getElementById('cancel-award-btn').addEventListener('click', resetAwardForm);
+
+            // Add new buttons
+            document.getElementById('add-new-project-btn').addEventListener('click', function() {
+                resetProjectForm();
+                document.getElementById('projects-tab').scrollIntoView({ behavior: 'smooth' });
+            });
+
+            document.getElementById('add-new-award-btn').addEventListener('click', function() {
+                resetAwardForm();
+                document.getElementById('awards-tab').scrollIntoView({ behavior: 'smooth' });
+            });
+
+            // Load projects function
+            function loadProjects() {
+                const tableBody = document.getElementById('projects-table-body');
+                
+                if (projects.length === 0) {
+                    tableBody.innerHTML = `
+                        <tr>
+                            <td colspan="5" class="empty-state">
+                                <i class="fas fa-folder-open"></i>
+                                <p>Belum ada proyek. Tambahkan proyek pertama Anda!</p>
+                            </td>
+                        </tr>
+                    `;
+                    return;
+                }
+                
+                // Clear table
+                tableBody.innerHTML = '';
+                
+                // Populate table
+                projects.forEach((project, index) => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${index + 1}</td>
+                        <td>${project.title}</td>
+                        <td><span class="award-type">${project.category}</span></td>
+                        <td>${new Date(project.date).toLocaleDateString('id-ID')}</td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="btn-edit" onclick="editProject('${project.id}')">
+                                    <i class="fas fa-edit"></i> Edit
+                                </button>
+                                <button class="btn-delete" onclick="deleteProject('${project.id}')">
+                                    <i class="fas fa-trash"></i> Hapus
+                                </button>
+                            </div>
+                        </td>
+                    `;
+                    tableBody.appendChild(row);
+                });
+            }
+
+            // Load awards function
+            function loadAwards() {
+                const tableBody = document.getElementById('awards-table-body');
+                
+                if (awards.length === 0) {
+                    tableBody.innerHTML = `
+                        <tr>
+                            <td colspan="6" class="empty-state">
+                                <i class="fas fa-trophy"></i>
+                                <p>Belum ada penghargaan. Tambahkan penghargaan pertama Anda!</p>
+                            </td>
+                        </tr>
+                    `;
+                    return;
+                }
+                
+                // Clear table
+                tableBody.innerHTML = '';
+                
+                // Populate table
+                awards.forEach((award, index) => {
+                    const typeClass = `award-${award.type}`;
+                    const typeText = award.type === 'gold' ? 'Emas' : award.type === 'silver' ? 'Perak' : 'Perunggu';
+                    
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${index + 1}</td>
+                        <td>${award.title}</td>
+                        <td><span class="award-type ${typeClass}">${typeText}</span></td>
+                        <td>${new Date(award.date).toLocaleDateString('id-ID')}</td>
+                        <td>${award.issuer}</td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="btn-edit" onclick="editAward('${award.id}')">
+                                    <i class="fas fa-edit"></i> Edit
+                                </button>
+                                <button class="btn-delete" onclick="deleteAward('${award.id}')">
+                                    <i class="fas fa-trash"></i> Hapus
+                                </button>
+                            </div>
+                        </td>
+                    `;
+                    tableBody.appendChild(row);
+                });
+            }
+
+            // Update stats function
+            function updateStats() {
+                document.getElementById('total-projects').textContent = projects.length;
+                document.getElementById('total-awards').textContent = awards.length;
+                document.getElementById('total-items').textContent = projects.length + awards.length;
+            }
+
+            // Reset project form function
+            function resetProjectForm() {
+                editingProjectId = null;
+                document.getElementById('edit-project-id').value = '';
+                document.getElementById('project-title').value = '';
+                document.getElementById('project-description').value = '';
+                document.getElementById('project-category').value = '';
+                document.getElementById('project-date').value = today;
+                document.getElementById('project-image').value = '';
+                document.getElementById('project-tags').value = '';
+                document.getElementById('project-link').value = '';
+                document.getElementById('submit-project-btn').textContent = 'Simpan Proyek';
+            }
+
+            // Reset award form function
+            function resetAwardForm() {
+                editingAwardId = null;
+                document.getElementById('edit-award-id').value = '';
+                document.getElementById('award-title').value = '';
+                document.getElementById('award-description').value = '';
+                document.getElementById('award-type').value = '';
+                document.getElementById('award-date').value = today;
+                document.getElementById('award-issuer').value = '';
+                document.getElementById('award-icon').value = 'trophy';
+                document.getElementById('submit-award-btn').textContent = 'Simpan Penghargaan';
+            }
+
+            // Show alert function
+            function showAlert(message, type) {
+                const alertDiv = document.getElementById('alert');
+                alertDiv.textContent = message;
+                alertDiv.className = `alert alert-${type}`;
+                alertDiv.style.display = 'block';
+                
+                setTimeout(() => {
+                    alertDiv.style.display = 'none';
+                }, 3000);
+            }
+
+            // Global functions for table actions
+            window.editProject = function(id) {
+                const project = projects.find(p => p.id === id);
+                
+                if (project) {
+                    editingProjectId = id;
+                    document.getElementById('edit-project-id').value = id;
+                    document.getElementById('project-title').value = project.title;
+                    document.getElementById('project-description').value = project.description;
+                    document.getElementById('project-category').value = project.category;
+                    document.getElementById('project-date').value = project.date;
+                    document.getElementById('project-image').value = project.image;
+                    document.getElementById('project-tags').value = project.tags.join(', ');
+                    document.getElementById('project-link').value = project.link;
+                    document.getElementById('submit-project-btn').textContent = 'Update Proyek';
+                    
+                    // Switch to projects tab and scroll to form
+                    document.querySelector('[data-tab="projects"]').click();
+                    document.getElementById('projects-tab').scrollIntoView({ behavior: 'smooth' });
+                }
+            };
+
+            window.deleteProject = function(id) {
+                if (confirm('Apakah Anda yakin ingin menghapus proyek ini?')) {
+                    projects = projects.filter(p => p.id !== id);
+                    localStorage.setItem('portfolioProjects', JSON.stringify(projects));
+                    showAlert('Proyek berhasil dihapus!', 'success');
+                    loadProjects();
+                    updateStats();
+                }
+            };
+
+            window.editAward = function(id) {
+                const award = awards.find(a => a.id === id);
+                
+                if (award) {
+                    editingAwardId = id;
+                    document.getElementById('edit-award-id').value = id;
+                    document.getElementById('award-title').value = award.title;
+                    document.getElementById('award-description').value = award.description;
+                    document.getElementById('award-type').value = award.type;
+                    document.getElementById('award-date').value = award.date;
+                    document.getElementById('award-issuer').value = award.issuer;
+                    document.getElementById('award-icon').value = award.icon || 'trophy';
+                    document.getElementById('submit-award-btn').textContent = 'Update Penghargaan';
+                    
+                    // Switch to awards tab and scroll to form
+                    document.querySelector('[data-tab="awards"]').click();
+                    document.getElementById('awards-tab').scrollIntoView({ behavior: 'smooth' });
+                }
+            };
+
+            window.deleteAward = function(id) {
+                if (confirm('Apakah Anda yakin ingin menghapus penghargaan ini?')) {
+                    awards = awards.filter(a => a.id !== id);
+                    localStorage.setItem('portfolioAwards', JSON.stringify(awards));
+                    showAlert('Penghargaan berhasil dihapus!', 'success');
+                    loadAwards();
+                    updateStats();
+                }
+            };
+
+            // Add sample data if empty
+            if (projects.length === 0) {
+                projects = [
+                    {
+                        id: '1',
+                        title: 'Website E-commerce Fashion',
+                        description: 'Membuat website e-commerce untuk toko fashion lokal dengan sistem keranjang belanja dan checkout.',
+                        category: 'ecommerce',
+                        date: '2023-06-15',
+                        image: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80',
+                        tags: ['HTML/CSS', 'JavaScript', 'PHP', 'MySQL'],
+                        link: '#'
+                    }
+                ];
+                localStorage.setItem('portfolioProjects', JSON.stringify(projects));
+                loadProjects();
+            }
+
+            if (awards.length === 0) {
+                awards = [
+                    {
+                        id: '1',
+                        title: 'Juara 1 Lomba Web Design',
+                        description: 'Meraih juara pertama dalam kompetisi web design tingkat kabupaten dengan tema "Edukasi Teknologi".',
+                        type: 'gold',
+                        date: '2023-01-20',
+                        issuer: 'Dinas Pendidikan Kabupaten Karanganyar',
+                        icon: 'trophy'
+                    },
+                    {
+                        id: '2',
+                        title: 'Juara 2 Coding Competition',
+                        description: 'Peringkat kedua dalam lomba coding tingkat provinsi Jawa Tengah dengan bahasa pemrograman JavaScript.',
+                        type: 'silver',
+                        date: '2023-03-15',
+                        issuer: 'Provinsi Jawa Tengah',
+                        icon: 'medal'
+                    }
+                ];
+                localStorage.setItem('portfolioAwards', JSON.stringify(awards));
+                loadAwards();
+            }
+
+            updateStats();
+        });
+    </script>
+</body>
+</html>
